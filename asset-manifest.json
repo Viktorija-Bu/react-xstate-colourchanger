@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/Viktorija-Bu/react-xstate-colourchanger.git/static/css/main.26955afe.chunk.css",
-    "main.js": "/Viktorija-Bu/react-xstate-colourchanger.git/static/js/main.1b5d4e61.chunk.js",
-    "main.js.map": "/Viktorija-Bu/react-xstate-colourchanger.git/static/js/main.1b5d4e61.chunk.js.map",
-    "runtime-main.js": "/Viktorija-Bu/react-xstate-colourchanger.git/static/js/runtime-main.dba6f28b.js",
-    "runtime-main.js.map": "/Viktorija-Bu/react-xstate-colourchanger.git/static/js/runtime-main.dba6f28b.js.map",
-    "static/js/2.6018119e.chunk.js": "/Viktorija-Bu/react-xstate-colourchanger.git/static/js/2.6018119e.chunk.js",
-    "static/js/2.6018119e.chunk.js.map": "/Viktorija-Bu/react-xstate-colourchanger.git/static/js/2.6018119e.chunk.js.map",
-    "index.html": "/Viktorija-Bu/react-xstate-colourchanger.git/index.html",
-    "static/css/main.26955afe.chunk.css.map": "/Viktorija-Bu/react-xstate-colourchanger.git/static/css/main.26955afe.chunk.css.map",
-    "static/js/2.6018119e.chunk.js.LICENSE.txt": "/Viktorija-Bu/react-xstate-colourchanger.git/static/js/2.6018119e.chunk.js.LICENSE.txt"
+    "main.css": "/react-xstate-colourchanger.git/static/css/main.a5a253b5.chunk.css",
+    "main.js": "/react-xstate-colourchanger.git/static/js/main.649ca57b.chunk.js",
+    "main.js.map": "/react-xstate-colourchanger.git/static/js/main.649ca57b.chunk.js.map",
+    "runtime-main.js": "/react-xstate-colourchanger.git/static/js/runtime-main.9766ad33.js",
+    "runtime-main.js.map": "/react-xstate-colourchanger.git/static/js/runtime-main.9766ad33.js.map",
+    "static/js/2.e331e4f6.chunk.js": "/react-xstate-colourchanger.git/static/js/2.e331e4f6.chunk.js",
+    "static/js/2.e331e4f6.chunk.js.map": "/react-xstate-colourchanger.git/static/js/2.e331e4f6.chunk.js.map",
+    "index.html": "/react-xstate-colourchanger.git/index.html",
+    "static/css/main.a5a253b5.chunk.css.map": "/react-xstate-colourchanger.git/static/css/main.a5a253b5.chunk.css.map",
+    "static/js/2.e331e4f6.chunk.js.LICENSE.txt": "/react-xstate-colourchanger.git/static/js/2.e331e4f6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.dba6f28b.js",
-    "static/js/2.6018119e.chunk.js",
-    "static/css/main.26955afe.chunk.css",
-    "static/js/main.1b5d4e61.chunk.js"
+    "static/js/runtime-main.9766ad33.js",
+    "static/js/2.e331e4f6.chunk.js",
+    "static/css/main.a5a253b5.chunk.css",
+    "static/js/main.649ca57b.chunk.js"
   ]
 }
