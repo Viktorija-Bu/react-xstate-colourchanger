@@ -4,8 +4,7 @@ import * as ReactDOM from "react-dom";
 import { Machine, assign, send, State } from "xstate";
 import { useMachine, asEffect } from "@xstate/react";
 import { inspect } from "@xstate/inspect";
-import { dmMachine } from "./dmAppointment";
-
+import { dmMachine } from "./dmAppointment2";
 
 inspect({
     url: "https://statecharts.io/inspect",
@@ -43,7 +42,8 @@ const machine = Machine<SDSContext, any, SDSEvent>({
                                 assign((_context, event) => { return { recResult: event.value } })],
                             target: '.match'
                         },
-                        RECOGNISED: 'idle'
+                        RECOGNISED: 'idle',
+                        MAXSPEECH: "idle",
                     },
                     states: {
                         match: {

@@ -1,4 +1,15 @@
 import { MachineConfig, send, Action } from "xstate";
+import { grammar } from "./Grammars/quotesGrammar";
+import { loadGrammar } from "./runparser";
+import { parse } from "./chartparser";
+
+const grammar2 = loadGrammar(grammar)
+console.log(grammar2)
+
+const input = "to do is to be"
+const prs:any = parse(input.split(/\s+/),grammar2)
+console.log(prs)
+console.log(prs.resultsForRule(grammar2.$root)[0])
 
 
 const sayColour: Action<SDSContext, SDSEvent> = send((context: SDSContext) => ({

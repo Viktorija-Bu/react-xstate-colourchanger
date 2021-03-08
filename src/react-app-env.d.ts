@@ -13,6 +13,7 @@ interface SDSContext {
     no: string;
     choice: string;
     res: string;
+    action: any;
 
 }
 
@@ -22,4 +23,5 @@ type SDSEvent =
     | { type: 'ASRRESULT', value: string }
     | { type: 'ENDSPEECH' }
     | { type: 'LISTEN' }
-    | { type: 'SPEAK', value: string };
+    | { type: 'SPEAK', value: string }
+    | { type: "MAXSPEECH" };
