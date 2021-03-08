@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 import { Machine, assign, send, State } from "xstate";
 import { useMachine, asEffect } from "@xstate/react";
 import { inspect } from "@xstate/inspect";
-import { dmMachine } from "./dmAppointment2";
+import { dmMachine } from "./dmAppointment2_final";
 
 inspect({
     url: "https://statecharts.io/inspect",
@@ -13,6 +13,7 @@ inspect({
 
 import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit';
 
+let cnt = 0
 
 const machine = Machine<SDSContext, any, SDSEvent>({
     id: 'root',
@@ -43,7 +44,19 @@ const machine = Machine<SDSContext, any, SDSEvent>({
                             target: '.match'
                         },
                         RECOGNISED: 'idle',
-                        MAXSPEECH: "idle",
+                        MAXSPEECH: {
+                            actions: assign((context) => {
+                                if (context.count) 
+                                {
+                                    return { count: context.count +1,}
+                                } 
+                                else 
+                                {
+                                    return { count: cnt +1,}
+                                }
+                            }),
+                               target: 'idle'
+                            },
                     },
                     states: {
                         match: {

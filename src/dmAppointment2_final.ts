@@ -10,9 +10,9 @@ export function listen(): Action<SDSContext, SDSEvent> {
     return send('LISTEN')
 }
 
-let cnt = 0
+/*let cnt=0*/
 
-function helpme(saysmth: Action<SDSContext, SDSEvent>, nomatch:string, help:string, maxspeech2:string) : MachineConfig<SDSContext, any, SDSEvent> {
+function helpme(saysmth: Action<SDSContext, SDSEvent>, nomatch:string, help:string) : MachineConfig<SDSContext, any, SDSEvent> {
     return ({
         initial: "prompt",
         states:{
@@ -35,13 +35,53 @@ function helpme(saysmth: Action<SDSContext, SDSEvent>, nomatch:string, help:stri
                 on: { ENDSPEECH: "prompt" }},
 
             maxspeech: {
-                entry: say(maxspeech2),
+                    entry: say(""),
+                    on: { 
+                        ENDSPEECH: [
+                            {cond: (context) => context.count ===1, target: "reprompt0"},
+                            {cond: (context) => (context.count) ===2, target: "reprompt1" },
+                            {cond: (context) => (context.count) ===3, target: "reprompt2" },
+                            {cond: (context) => (context.count) ===4, target: "#machine" },
+
+                        ]}
+                        },
+
+           /* maxspeech: {
+                entry: say(""),
                 on: { 
                     ENDSPEECH: [
-                        {cond: () => (cnt++) ===3, target: "#machine"},
-                        {target: "prompt"}
-                    ]}}
+                        {cond: () => (cnt++) ==0, target: "reprompt0"},
+                        {cond: () => (cnt++) ==1, target: "reprompt1" },
+                        {cond: () => (cnt++) ==2, target: "reprompt2" },
+                        {cond: () => (cnt++) ==3, target: "#machine" },
+
+        
+                    ]}},*/
+                reprompt0: {
+                    entry: say("Please provide input"),
+                    on: { ENDSPEECH: "prompt"}
+
+                },
+
+                reprompt1: {
+                    entry: say("Please repeat the input"),
+                    on: { ENDSPEECH: "prompt"}
+
+                },
+
+                reprompt2: {
+                    entry: say("I cannot grasp the input, would you mind repeating?"),
+                    on: { ENDSPEECH: "prompt"}
+
+                },
+
+                /*reprompt3: {
+                    entry: say("Looks like the the input is unclear, please repeat once again"),
+                    on: { ENDSPEECH: "prompt"}
+
+                }*/
             },
+
         
     })
 }
@@ -112,7 +152,7 @@ export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
             initial: "prompt",
             on: {
                 RECOGNISED:[{
-                    actions: assign((context) => { return { choice: context.recResult } }),
+                    actions: [assign((context) => { return { choice: context.recResult } }), ],
                     target: "chosen_thing" },
                 
                 { target: ".nomatch" }],
@@ -120,7 +160,7 @@ export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
                 MAXSPEECH: ".maxspeech"
             },
 
-            ...helpme(say("What would you like to do?"), "Would you mind repeating?", "Choose one of the three actions: appointment, to do list or timer", "Please provide input")
+            ...helpme(say("What would you like to do?"), "Would you mind repeating?", "Choose one of the three actions: appointment, to do list or timer")
 
         },
         chosen_thing:{
@@ -210,7 +250,7 @@ export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
                 MAXSPEECH: ".maxspeech"
             },
 
-            ...helpme(say("Who are you meeting with?"), "Sorry I don't know them", "Name a person from your contact list whom you want to meet", "Please repeat the input")
+            ...helpme(say("Who are you meeting with?"), "Sorry I don't know them", "Name a person from your contact list whom you want to meet")
         },
         day: {
             initial: "prompt",
@@ -229,7 +269,7 @@ export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
 
             ...helpme(send((context) => ({
                         type: "SPEAK",
-                        value: `OK. ${context.person}. On which day is your meeting?`})), "Sorry I did not understand", "Name a day when you want to meet your chosen person from the contact list", "I cannot grasp the input, would you mind repeating?"),           
+                        value: `OK. ${context.person}. On which day is your meeting?`})), "Sorry I did not understand", "Name a day when you want to meet your chosen person from the contact list"),           
         },
         whole_day: {
             initial: "prompt",
@@ -247,7 +287,7 @@ export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
                 MAXSPEECH: ".maxspeech"
             },
 
-            ...helpme(say("Will it take the whole day?"), "Please repeat", "You need to tell me whether you want to meet the person from morning to late afternoon", "Looks like the input is unclear, please repeat")
+            ...helpme(say("Will it take the whole day?"), "Please repeat", "You need to tell me whether you want to meet the person from morning to late afternoon")
         },
         app: {
             initial: "prompt",
@@ -267,7 +307,7 @@ export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
 
             ...helpme(send((context) => ({
                         type: "SPEAK",
-                        value: `Do you want me to create an appointment with ${context.person} on ${context.day} for the whole day?`})), "Please repeat", "Time to make a decision whether you want to meet your chosen person from morning to afternoon", "Time to repeat the input")
+                        value: `Do you want me to create an appointment with ${context.person} on ${context.day} for the whole day?`})), "Please repeat", "Time to make a decision whether you want to meet your chosen person from morning to afternoon")
         },
         done: {
             initial: "prompt",
@@ -297,7 +337,7 @@ export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
 
             ...helpme(send((context) => ({
                         type: "SPEAK",
-                        value: `${context.day} it is. What time is your meeting?`})), "Sorry could you repeat", "Say hour for the meeting on your chosen day", "Seems like I cannot grasp you, please say one more time")
+                        value: `${context.day} it is. What time is your meeting?`})), "Sorry could you repeat", "Say hour for the meeting on your chosen day")
         },
         app2: {
             initial: "prompt",
@@ -317,7 +357,7 @@ export const dmMachine: MachineConfig<SDSContext, any, SDSEvent> = ({
 
             ...helpme(send((context) => ({
                         type: "SPEAK",
-                        value: `Do you want me to create an appointment with ${context.person} on ${context.day} at ${context.time}?`})), "Please repeat", "Time to make a decision comrade", "Are you being silent? Repeat please")
+                        value: `Do you want me to create an appointment with ${context.person} on ${context.day} at ${context.time}?`})), "Please repeat", "Time to make a decision comrade")
         },
     }
 })

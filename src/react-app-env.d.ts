@@ -14,6 +14,7 @@ interface SDSContext {
     choice: string;
     res: string;
     action: any;
+    count: any;
 
 }
 
